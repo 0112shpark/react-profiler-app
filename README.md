@@ -1,9 +1,5 @@
 # 🌟react-Profiler-app
 
-<div align="center">
-<img src ="./images/totalview.gif" alt = "logo">
-</div>
-
 ---
 
 ## :bell: Visit the site
@@ -119,8 +115,63 @@ const B = ({ message, posts }) => {
 export default B;
 ```
 
-✏️ We use `History API` of HTML 5 to change page. For example, we use follwing methods.
+✏️ If we look at the result at `profiler`, we can see that the `B.js` takes more time to render than the `A.js`.
 
-- `History.back()`
-- `History.foward()`
-- `History.go()`
+<div align="center">
+<img width=500px src ="./images/prof.jpg" alt = "pic">
+</div>
+
+<br/>
+
+- This is because `React` rerenders all the `child components` when its `parents component` renders. So, the `B component` will render when `App.js` renders. And all the its child components, such as `List, Message..etc` will render. However, `A.js`, just have one component, so it will render only once after `App.js` renders.
+- But, to benefit the reusage and optimization of each components.
+
+#### ⭐ we can use `react.memo()`.
+
+---
+
+#### `B.js` with `React.memo()`.
+
+```javascript
+import React from "react";
+
+const Message = React.memo(({ message }) => {
+  return <p>{message}</p>;
+});
+
+const ListItems = React.memo(({ post }) => {
+  return (
+    <li key={post.id}>
+      <p>{post.title}</p>
+    </li>
+  );
+});
+const List = React.memo(({ posts }) => {
+  return (
+    <ul>
+      {posts.map((post) => {
+        return <ListItems key={post.id} post={post} />;
+      })}
+    </ul>
+  );
+});
+const B = ({ message, posts }) => {
+  return (
+    <div>
+      <h1>B component</h1>
+      <Message message={message} />
+      <List posts={posts} />
+    </div>
+  );
+};
+
+export default B;
+```
+
+- React first render the component, and compare it with previous results and update `DOM`.
+- By using `react.memo()`, React will `Memoizing` the component after it has been rendered. When next render occurs, if the `props` of the component are same, React will reuse the Memoized component.
+
+- By the result, `B.js` takes less time than `A.js` when rendering the component.
+<div align="center">
+<img width=500px src ="./images/memo.jpg" alt = "pic">
+</div>
