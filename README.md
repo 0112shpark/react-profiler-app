@@ -1,70 +1,126 @@
-# Getting Started with Create React App
+# 🌟react-Profiler-app
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<div align="center">
+<img src ="./images/totalview.gif" alt = "logo">
+</div>
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## :bell: Visit the site
 
-### `npm start`
+➡️[Visit the Site!(Vercel)](https://react-tictactoe-app.vercel.app/)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+➡️[Visit the Site!(Github pages)](https://0112shpark.github.io/react-tictactoe-app/)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 🧐 About
 
-### `npm test`
+Use react-profiler to compare the performance of components.  
+After that, try to optimize it.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 💡Features
 
-### `npm run build`
+-
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## ⛏️Built with
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white">
+- <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white">
+- <img src ="https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E">
+- <img src ="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB">
+- <img src="https://img.shields.io/badge/VSCode-0078D4?style=for-the-badge&logo=visual%20studio%20code&logoColor=white">
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 🏃Getting Started
 
-### `npm run eject`
+### 📌 Start at local device
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- This project works on the device with `node.js` installesd.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+1. Make new folder on your computer.
+2. Clone this repository.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+- `git clone https://github.com/0112shpark/react-profiler-app.git`
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+3. Install npm packages.**(on your terminal.)**
 
-## Learn More
+- `npm install`
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+4. Run development server with following command.**(on your terminal.)**
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- `npm start`
 
-### Code Splitting
+## 📚Some Analysis
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### 📃Comparing A.js and B.js
 
-### Analyzing the Bundle Size
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+#### `A.js` has all of the elements in one component.
 
-### Making a Progressive Web App
+```javascript
+import React from "react";
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+//all elements in one component
+const A = ({ message, posts }) => {
+  return (
+    <div>
+      <h1>A Component</h1>
+      <p>{message}</p>
+      <ul>
+        {posts.map((post) => {
+          return (
+            <li key={post.id}>
+              <p>{post.title}</p>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  );
+};
 
-### Advanced Configuration
+export default A;
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+#### `B.js` devides elements in several componenets.
 
-### Deployment
+```javascript
+import React from "react";
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+const Message = ({ message }) => {
+  return <p>{message}</p>;
+};
 
-### `npm run build` fails to minify
+const ListItems = ({ post }) => {
+  return (
+    <li key={post.id}>
+      <p>{post.title}</p>
+    </li>
+  );
+};
+const List = ({ posts }) => {
+  return (
+    <ul>
+      {posts.map((post) => {
+        return <ListItems key={post.id} post={post} />;
+      })}
+    </ul>
+  );
+};
+const B = ({ message, posts }) => {
+  return (
+    <div>
+      <h1>B component</h1>
+      <Message message={message} />
+      <List posts={posts} />
+    </div>
+  );
+};
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+export default B;
+```
+
+✏️ We use `History API` of HTML 5 to change page. For example, we use follwing methods.
+
+- `History.back()`
+- `History.foward()`
+- `History.go()`
